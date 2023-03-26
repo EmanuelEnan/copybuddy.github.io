@@ -20,7 +20,8 @@
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="A new Flutter project.">
-  <meta name="google-signin-client_id" content="603568495927-mci7lb1iael4937r3a37hpen16h4gvc8.apps.googleusercontent.com">
+  <meta name="google-signin-client_id"
+    content="603568495927-mci7lb1iael4937r3a37hpen16h4gvc8.apps.googleusercontent.com">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -36,58 +37,31 @@
 
   <script>
     // The value below is injected by flutter build, do not touch.
-    var serviceWorkerVersion = '3830178326';
+    var serviceWorkerVersion = '396092549';
   </script>
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
-  <style>
-    .loading {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      -ms-transform: translate(-50%, -50%);
-      transform: translate(-50%, -50%);
-    }
-    
-    .loader {
-      border: 12px solid #f3f3f3;
-      border-radius: 50%;
-      border: 10px solid ;
-      border-top: 12px solid cyan;
-      border-right: 12px solid white;
-      border-bottom: 12px solid cyan;
-      border-left: 12px solid white;
-      width: 80px;
-      height: 80px;
-      -webkit-animation: spin 1s linear infinite;
-      animation: spin 1s linear infinite;
-    }
-    
-    @-webkit-keyframes spin {
-      0% {
-        -webkit-transform: rotate(0deg);
-      }
-      100% {
-        -webkit-transform: rotate(360deg);
-      }
-    }
-    
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-  </style>
+
 </head>
 
 <body>
+  <style>
+    body {
+      /* background-color: #0a0a0a; */
+      height: 100vh;
+      width: 100vw;
+      margin: 0;
+    }
+
+    .main-content {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity .4s ease-out;
+    }
+  </style>
 
 
   <script type="module">
@@ -110,11 +84,33 @@
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
+
+
+    function delay(time) {
+      return new Promise(resolve => setTimeout(resolve, time));
+    }
+
+    window.addEventListener('load', function (ev) {
+      var loaderContent = document.querySelector('#loader-content');
+      // Download main.dart.js
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        },
+        onEntrypointLoaded: function (engineInitializer) {
+          engineInitializer.initializeEngine().then(async function (appRunner) {
+            loaderContent.style.opacity = "0";
+            await delay(400);
+            await appRunner.runApp();
+          })
+        }
+      });
+    });
+
   </script>
-  <div class="loading">
-    <div class="loader"></div>
+  <div class="main-content" id="loader-content">
+    <img src="./assets/city.gif" alt="My App Logo" />
   </div>
-  <script src="main.dart.js" type="application/javascript"></script>
 </body>
 
 </html>
