@@ -37,7 +37,7 @@
 
   <script>
     // The value below is injected by flutter build, do not touch.
-    var serviceWorkerVersion = '396092549';
+    var serviceWorkerVersion = '349110594';
   </script>
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
@@ -59,7 +59,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: opacity .4s ease-out;
+      transition: opacity .25s ease-out;
     }
   </style>
 
@@ -100,7 +100,7 @@
         onEntrypointLoaded: function (engineInitializer) {
           engineInitializer.initializeEngine().then(async function (appRunner) {
             loaderContent.style.opacity = "0";
-            await delay(400);
+            await delay(300);
             await appRunner.runApp();
           })
         }
